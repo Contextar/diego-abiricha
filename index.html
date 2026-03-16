@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diego Abiricha — Gestión · Procesos · Sociología</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700;900&family=Crimson+Pro:ital,wght@1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1e4a2a;
+    --green-light: #2d6b3a;
+    --green-pale: #e8f0e8;
+    --black: #0f0f0f;
+    --white: #ffffff;
+    --offwhite: #f7f9f7;
+    --gray: #666;
+    --border: #d4e4d4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--white); color: var(--black); font-family: 'Crimson Pro', serif; font-weight: 300; overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--green); padding: 0 5rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-name { font-family: 'Crimson Pro', serif; font-weight: 900; font-size: 1.2rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); text-decoration: none; }
+  .nav-name span { color: #a8d4a8; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.55); font-family: 'Crimson Pro', serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: #a8d4a8; }
+  .nav-cv { background: var(--white); color: var(--green) !important; padding: 0.4rem 1.1rem; font-weight: 700 !important; }
+
+  .hero { min-height: 100vh; padding-top: 60px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: var(--white); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 0; right: 0; width: 50%; height: 100%; background: var(--offwhite); border-left: 1px solid var(--border); }
+  .hero-left { padding: 6rem 4rem 6rem 6rem; position: relative; z-index: 2; animation: fadeUp 0.9s ease both; }
+  .hero-tag { font-family: 'Crimson Pro', serif; font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--green); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+  .hero-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--green); }
+  .hero-name { font-family: 'Crimson Pro', serif; font-weight: 900; font-size: clamp(4rem, 7vw, 7rem); line-height: 0.88; text-transform: uppercase; color: var(--black); margin-bottom: 0.5rem; }
+  .hero-name span { color: var(--green); }
+  .hero-role { font-family: 'Crimson Pro', serif; font-weight: 600; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2rem; }
+  .hero-bio { font-size: 0.95rem; line-height: 1.9; color: #555; max-width: 460px; margin-bottom: 2.5rem; }
+  .hero-bio strong { color: var(--black); font-weight: 500; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-green { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--green); color: var(--white); padding: 0.9rem 1.8rem; text-decoration: none; font-family: 'Crimson Pro', serif; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; transition: background 0.2s; }
+  .btn-green:hover { background: var(--green-light); }
+  .btn-outline { display: inline-flex; align-items: center; border: 1px solid var(--border); color: var(--gray); padding: 0.9rem 1.8rem; text-decoration: none; font-family: 'Crimson Pro', serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; transition: all 0.2s; }
+  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+  .hero-right { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem; gap: 1.5rem; animation: fadeIn 1s ease both 0.3s; }
+  .hero-photo { width: 240px; height: 240px; border-radius: 50%; object-fit: cover; object-position: center top; border: 3px solid var(--green); }
+  .hero-photo-placeholder { width: 240px; height: 240px; border-radius: 50%; background: var(--green); border: 3px solid var(--green); display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-size: 4rem; font-weight: 900; color: var(--white); }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; max-width: 320px; }
+  .hchip { padding: 0.3rem 0.8rem; border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #999; transition: all 0.2s; }
+  .hchip:hover, .hchip.green { border-color: var(--green); color: var(--green); }
+
+  section { padding: 7rem 6rem; }
+  .sec-tag { font-family: 'Crimson Pro', serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--green); display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
+  .sec-tag::before { content: ''; display: block; width: 18px; height: 1px; background: var(--green); flex-shrink: 0; }
+  .sec-title { font-family: 'Crimson Pro', serif; font-weight: 900; font-size: clamp(2.5rem, 4vw, 3.8rem); text-transform: uppercase; line-height: 0.95; margin-bottom: 3.5rem; color: var(--black); }
+  .sec-title span { color: var(--green); }
+
+  .experiencia { background: var(--white); border-top: 1px solid var(--border); }
+  .exp-grid { display: flex; flex-direction: column; }
+  .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-date { font-family: 'Crimson Pro', serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); padding-top: 0.2rem; }
+  .exp-company { font-family: 'Crimson Pro', serif; font-weight: 800; font-size: 1.2rem; text-transform: uppercase; color: var(--black); margin-bottom: 0.2rem; }
+  .exp-role { font-family: 'Crimson Pro', serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.9rem; }
+  .exp-desc { font-size: 0.88rem; line-height: 1.8; color: #777; }
+  .exp-desc li { margin-bottom: 0.4rem; list-style: none; display: flex; gap: 0.6rem; }
+  .exp-desc li::before { content: '—'; color: var(--green); flex-shrink: 0; }
+
+  .academia { background: var(--offwhite); border-top: 1px solid var(--border); }
+  .acad-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+  .acad-card { background: var(--white); padding: 2.5rem; position: relative; overflow: hidden; transition: background 0.3s; cursor: default; }
+  .acad-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--green); transition: width 0.4s ease; }
+  .acad-card:hover { background: var(--green-pale); }
+  .acad-card:hover::after { width: 100%; }
+  .acad-type { font-family: 'Crimson Pro', serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--green); margin-bottom: 0.8rem; display: block; }
+  .acad-title { font-family: 'Crimson Pro', serif; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; color: var(--black); margin-bottom: 0.7rem; line-height: 1.2; }
+  .acad-desc { font-size: 0.84rem; line-height: 1.75; color: #777; }
+
+  .contextar { background: var(--green); padding: 5rem 6rem; }
+  .ctx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .contextar .sec-tag { color: rgba(255,255,255,0.6); }
+  .contextar .sec-tag::before { background: rgba(255,255,255,0.4); }
+  .ctx-title { font-family: 'Crimson Pro', serif; font-weight: 900; font-size: clamp(2.8rem, 5vw, 4.5rem); text-transform: uppercase; color: var(--white); line-height: 0.9; margin-bottom: 1.5rem; }
+  .ctx-desc { font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+  .btn-white { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--white); color: var(--green); padding: 0.9rem 1.8rem; text-decoration: none; font-family: 'Crimson Pro', serif; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; transition: background 0.2s; margin-right: 0.8rem; }
+  .btn-white:hover { background: #e0ede0; }
+  .btn-white-outline { display: inline-flex; align-items: center; gap: 0.6rem; border: 2px solid rgba(255,255,255,0.4); color: var(--white); padding: 0.9rem 1.8rem; text-decoration: none; font-family: 'Crimson Pro', serif; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; transition: all 0.2s; }
+  .btn-white-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+  .ctx-services { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .ctx-service { background: rgba(255,255,255,0.1); padding: 1.2rem; font-family: 'Crimson Pro', serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.85); display: flex; align-items: center; gap: 0.5rem; }
+  .ctx-service::before { content: '→'; color: rgba(255,255,255,0.4); }
+
+  .herramientas { background: var(--white); border-top: 1px solid var(--border); }
+  .tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
+  .tool-group { background: var(--offwhite); padding: 2rem; }
+  .tool-group-title { font-family: 'Crimson Pro', serif; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem; display: block; }
+  .tool-list { display: flex; flex-direction: column; gap: 0.4rem; }
+  .tool-item { font-family: 'Crimson Pro', serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; color: #555; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
+  .tool-item::before { content: '·'; color: var(--green); }
+
+  .contacto { background: var(--offwhite); border-top: 1px solid var(--border); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem; }
+  .clink { display: flex; align-items: center; gap: 1rem; text-decoration: none; transition: gap 0.2s; }
+  .clink:hover { gap: 1.4rem; }
+  .cicon { width: 42px; height: 42px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'Crimson Pro', serif; font-size: 0.62rem; font-weight: 900; letter-spacing: 0.06em; color: var(--white); flex-shrink: 0; transition: background 0.2s; }
+  .clink:hover .cicon { background: var(--green-light); }
+  .ctxt { font-size: 0.88rem; color: #888; transition: color 0.2s; }
+  .clink:hover .ctxt { color: var(--black); }
+  .contact-desc { font-size: 0.92rem; line-height: 1.85; color: #777; }
+
+  footer { background: var(--green); padding: 1.5rem 6rem; display: flex; align-items: center; justify-content: space-between; }
+  .fbrand { font-family: 'Crimson Pro', serif; font-weight: 900; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); }
+  .fbrand span { color: #a8d4a8; }
+  .fcopy { font-size: 0.7rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 2rem; }
+    .contextar { padding: 4rem 2rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 4rem 2rem 2rem; }
+    .hero-right { padding: 2rem; }
+    .hero::before { display: none; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .acad-grid { grid-template-columns: 1fr; }
+    .ctx-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .ctx-services { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { flex-direction: column; gap: 0.8rem; padding: 1.5rem 2rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-name">Diego <span>Abiricha</span></a>
+  <ul class="nav-links">
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#academia">Producción</a></li>
+    <li><a href="#contextar">Contextar</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="CV_Diego_Abiricha_2026.pdf" target="_blank" class="nav-cv">CV →</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Buenos Aires · Argentina</span>
+    <h1 class="hero-name">Diego<br><span>Abiricha</span></h1>
+    <p class="hero-role">Gestión organizacional · Procesos · Sociología</p>
+    <p class="hero-bio">Profesional con más de <strong>10 años en tesorería, análisis de procesos y transformación digital</strong> en organizaciones de distintos rubros y tamaños. Estudiante avanzado de la <strong>Licenciatura en Sociología en la UBA</strong>, formación que complementa la mirada operativa con una perspectiva metodológica aplicada al análisis organizacional.</p>
+    <div class="hero-btns">
+      <a href="#contacto" class="btn-green">Contacto →</a>
+      <a href="CV_Diego_Abiricha_2026.pdf" target="_blank" class="btn-outline">Descargar CV</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-placeholder">DA</div>
+    <div class="hero-chips">
+      <span class="hchip green">Tesorería</span>
+      <span class="hchip">Procesos</span>
+      <span class="hchip">Power BI</span>
+      <span class="hchip green">UX Research</span>
+      <span class="hchip">ERPs</span>
+      <span class="hchip">Sociología</span>
+      <span class="hchip">Agile</span>
+      <span class="hchip green">SPSS</span>
+      <span class="hchip">Transformación Digital</span>
+    </div>
+  </div>
+</section>
+
+<section class="experiencia" id="experiencia">
+  <div class="reveal"><span class="sec-tag">Trayectoria</span></div>
+  <h2 class="sec-title reveal">Experiencia<br><span>profesional</span></h2>
+  <div class="exp-grid">
+    <div class="exp-item reveal">
+      <div class="exp-date">Nov 2024 — Jul 2025</div>
+      <div>
+        <div class="exp-company">CELS — Centro de Estudios Legales y Sociales</div>
+        <div class="exp-role">Responsable de Tesorería y Pagos · ONG</div>
+        <ul class="exp-desc">
+          <li>Reorganicé el área de tesorería mapeando procesos e identificando fricciones operativas.</li>
+          <li>Implementé un Cashflow para proyecciones financieras y control de posición diaria.</li>
+          <li>Diseñé el circuito de compras y pagos con esquema de aprobaciones diferenciado por roles.</li>
+          <li>Administré viáticos en múltiples monedas para viajes internacionales del staff.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-date">Ene — May 2024</div>
+      <div>
+        <div class="exp-company">MCL Studio</div>
+        <div class="exp-role">Responsable de Tesorería · Arquitectura</div>
+        <ul class="exp-desc">
+          <li>Desarrollé el área de tesorería desde su creación, estableciendo procesos y controles.</li>
+          <li>Implementé el módulo de tesorería en ERP Finnegans e integré con el área de compras.</li>
+          <li>Gestioné caja (80% USD), proyecciones ARS/USD e inversiones locales e internacionales.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-date">Sep 2016 — Sep 2023</div>
+      <div>
+        <div class="exp-company">Vitalcan S.A.</div>
+        <div class="exp-role">Analista de Tesorería · Gestión Financiera · Cuentas a Pagar</div>
+        <ul class="exp-desc">
+          <li>Supervisé operaciones diarias de tesorería durante 7 años en empresa de escala nacional.</li>
+          <li>Gestioné movimientos bancarios en más de 10 entidades vía Interbanking.</li>
+          <li>Implementé circuitos de proveedores y cuentas a pagar, estandarizando el proceso.</li>
+          <li>Realicé operaciones de comercio exterior, conciliaciones, cobranzas y operación financiera.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-date">2012 — 2015</div>
+      <div>
+        <div class="exp-company">Experiencias anteriores</div>
+        <div class="exp-role">Análisis financiero · Créditos · Cuentas corrientes</div>
+        <ul class="exp-desc">
+          <li>Grupo Financiero Cohen (SGR) — Analista de Riesgos (Sep–Dic 2015)</li>
+          <li>J. Llorente y CIA S.A. — Analista de Cuentas Corrientes (Nov 2014–Ago 2015)</li>
+          <li>TA Plusmar S.A. — Analista de Créditos (Ago 2012–Nov 2014)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="academia" id="academia">
+  <div class="reveal"><span class="sec-tag">UBA · Sociología</span></div>
+  <h2 class="sec-title reveal">Producción<br><span>académica</span></h2>
+  <div class="acad-grid">
+    <div class="acad-card reveal">
+      <span class="acad-type">Ponencia · Jornadas de Sociología UBA 2024</span>
+      <div class="acad-title">Imaginarios urbanos y capitalismo de plataformas</div>
+      <p class="acad-desc">Análisis del impacto de plataformas digitales en la reconfiguración del espacio urbano y las dinámicas laborales. Presentado en las Jornadas de Sociología de la UBA, 2024.</p>
+    </div>
+    <div class="acad-card reveal">
+      <span class="acad-type">Ensayo académico · Teoría sociológica</span>
+      <div class="acad-title">Frivolidad identitaria: la comodidad de lo ajeno</div>
+      <p class="acad-desc">Reflexión sobre racionalización, capitalismo de plataformas e identidad en la posmodernidad. Partiendo de Weber y Habermas, analiza cómo el "alcance" digital reconfigura la acción social y los modos de construcción identitaria.</p>
+    </div>
+    <div class="acad-card reveal">
+      <span class="acad-type">Propuesta de política pública · 2026</span>
+      <div class="acad-title">Programa Aula Sin Celulares</div>
+      <p class="acad-desc">Propuesta de regulación del uso de celulares en escuelas secundarias de la Provincia de Buenos Aires. Incluye diseño cuasi-experimental de evaluación, estrategia de escalamiento provincial y modelado presupuestario.</p>
+    </div>
+    <div class="acad-card reveal">
+      <span class="acad-type">Taller · Nivel secundario</span>
+      <div class="acad-title">¿Para qué sirve la Sociología?</div>
+      <p class="acad-desc">Taller de introducción a la sociología para estudiantes de nivel secundario. Diseño, contenido y conducción propios. Aborda teoría clásica, metodología de investigación y aplicaciones contemporáneas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contextar" id="contextar">
+  <div class="ctx-grid">
+    <div class="reveal">
+      <span class="sec-tag">Proyecto propio · Consultoría</span>
+      <h2 class="ctx-title">Contextar<br>Industria Social</h2>
+      <p class="ctx-desc">Consultoría organizacional orientada a ONGs y pymes. Diagnóstico, diseño de procesos e implementación con metodología cualitativa y mirada sociológica. Fundada en 2025.</p>
+      <div>
+        <a href="https://contextar.github.io/Contextar/" target="_blank" class="btn-white">Ver sitio →</a>
+        <a href="https://www.linkedin.com/company/contextar" target="_blank" class="btn-white-outline">LinkedIn</a>
+      </div>
+    </div>
+    <div class="ctx-services reveal">
+      <div class="ctx-service">Tesorería operativa</div>
+      <div class="ctx-service">Gestión de proveedores</div>
+      <div class="ctx-service">Cobranzas y cuentas</div>
+      <div class="ctx-service">Procesos y circuitos</div>
+      <div class="ctx-service">Transformación digital</div>
+      <div class="ctx-service">Diagnóstico organizacional</div>
+    </div>
+  </div>
+</section>
+
+<section class="herramientas" id="herramientas">
+  <div class="reveal"><span class="sec-tag">Stack</span></div>
+  <h2 class="sec-title reveal">Herramientas<br><span>y habilidades</span></h2>
+  <div class="tools-grid">
+    <div class="tool-group reveal">
+      <span class="tool-group-title">Datos y análisis</span>
+      <div class="tool-list">
+        <span class="tool-item">Power BI</span>
+        <span class="tool-item">SPSS</span>
+        <span class="tool-item">Excel avanzado</span>
+        <span class="tool-item">Google Sheets</span>
+      </div>
+    </div>
+    <div class="tool-group reveal">
+      <span class="tool-group-title">ERP</span>
+      <div class="tool-list">
+        <span class="tool-item">Finnegans</span>
+        <span class="tool-item">SAP</span>
+        <span class="tool-item">Odoo</span>
+        <span class="tool-item">Sage X3</span>
+        <span class="tool-item">Bejerman</span>
+      </div>
+    </div>
+    <div class="tool-group reveal">
+      <span class="tool-group-title">Metodología</span>
+      <div class="tool-list">
+        <span class="tool-item">UX Research</span>
+        <span class="tool-item">Metodologías ágiles</span>
+        <span class="tool-item">Investigación cualitativa</span>
+        <span class="tool-item">Investigación cuantitativa</span>
+      </div>
+    </div>
+    <div class="tool-group reveal">
+      <span class="tool-group-title">Gestión y colaboración</span>
+      <div class="tool-list">
+        <span class="tool-item">Miro · Notion · Asana</span>
+        <span class="tool-item">Slack · Wordpress</span>
+        <span class="tool-item">Office 365</span>
+        <span class="tool-item">Google Workspace</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="contact-grid">
+    <div class="reveal">
+      <span class="sec-tag">Contacto</span>
+      <h2 class="sec-title">Hablemos.</h2>
+      <p class="contact-desc">Estoy en búsqueda activa de nuevos desafíos en roles de gestión de procesos, tesorería, Business Intelligence o transformación digital. También abierto a proyectos de consultoría organizacional.</p>
+    </div>
+    <div class="reveal">
+      <div class="contact-links">
+        <a href="mailto:dabiricha91@gmail.com" class="clink"><div class="cicon">✉</div><span class="ctxt">dabiricha91@gmail.com</span></a>
+        <a href="https://wa.me/5491122597605" class="clink" target="_blank"><div class="cicon">WA</div><span class="ctxt">+54 9 11 2259 7605</span></a>
+        <a href="https://www.linkedin.com/in/diego-abiricha" class="clink" target="_blank"><div class="cicon">IN</div><span class="ctxt">linkedin.com/in/diego-abiricha</span></a>
+        <a href="https://www.instagram.com/context_ar/" class="clink" target="_blank"><div class="cicon">IG</div><span class="ctxt">@context_ar · Contextar</span></a>
+        <a href="https://contextar.github.io/Contextar/" class="clink" target="_blank"><div class="cicon">WEB</div><span class="ctxt">contextar.github.io/Contextar</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="fbrand">Diego <span>Abiricha</span></span>
+  <span class="fcopy">© 2026 · Buenos Aires · Argentina</span>
+  <span class="fcopy">Gestión · Procesos · Sociología</span>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
